@@ -1,29 +1,22 @@
-var fs = require('fs'),
-    path = require('path')
+var Mustache = require("./mustache");
 
-function dirTree(filename) {
-    var stats = fs.lstatSync(filename),
-        info = {
-            path: filename,
-            name: path.basename(filename)
-        };
-
-    if (stats.isDirectory()) {
-        info.type = "folder";
-        info.children = fs.readdirSync(filename).map(function(child) {
-            return dirTree(filename + '/' + child);
-        });
-    } else {
-        // Assuming it's a file. In real life it could be a symlink or
-        // something else!
-        info.type = "file";
+var view = {tempObj:[
+    {
+        title: "Joe",
+        calc: function () {
+            return 2 + 4;
+        }
+    },
+    {
+        title: "Akshay",
+        calc: function () {
+            return 2 + 4;
+        }
     }
-
-    return info;
+]};
+try{
+    var output = Mustache.render("{{#tempObj}}{{title}} spends {{calc}}\n ", view);
 }
-
-if (module.parent == undefined) {
-    // node dirTree.js ~/foo/bar
-    var util = require('util');
-    console.log(util.inspect(dirTree(__dirname +'/AppDirectory'), false, null));
+catch(e){
+    console.log(e)
 }
