@@ -1,0 +1,24 @@
+Here is the backend  process
+
+1. Validate the xml received
+2. Decide the tags, Decide the actions
+3. Write the parser for '{{}}'
+4. Write the rendering rules
+5. Strategy for the inclusion of new functions/actions/tags
+
+
+
+The bigger object which can have multiple inner objects --> inner element can be an object or a string
+
+it will be object
+    1. if more inner tags
+    2. property tags
+
+
+Aim:
+
+1. Should render the strings in nested fashion
+2. Should process certain tags such as "sort inc", "sort dec", action="repeat"
+3. Should create directories and files with dynamic names and structure
+4. Should be able to edit the previous content -- ??
+
