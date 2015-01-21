@@ -1,4 +1,11 @@
 var Mustache = require("./mustache");
+var xml2js = require("xml2js");
+var xml = '<akshay isRepeat="true">this is the {{data}}<name class="single">my name is akshay \n</name></akshay>';
+var viewNew;
+xml2js.parseString(xml, function (err, result) {
+    viewNew = result;
+    console.log(JSON.stringify(result));
+});
 
 var view = {tempObj:[
     {
@@ -15,7 +22,8 @@ var view = {tempObj:[
     }
 ]};
 try{
-    var output = Mustache.render("{{#tempObj}}{{title}} spends {{calc}}\n ", view);
+    var output = Mustache.render("{{#tempObj}}{{title}} spends {{calc}}\n {{/tempObj}} ", view);
+    console.log(output)
 }
 catch(e){
     console.log(e)
