@@ -22,3 +22,10 @@ Aim:
 3. Should create directories and files with dynamic names and structure
 4. Should be able to edit the previous content -- ??
 
+<renderFile>
+	<div  >This is the first Line <div repeat="MetaJSON.META_TABLE">This is another line</div></div>
+        <div>this is the second line </div>
+        <div repeat="true">This is the third line </div>
+
+</renderFile>
+

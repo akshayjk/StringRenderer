@@ -12,18 +12,27 @@ var express = require('express'),
     xml2js = require('xml2js');
 
 
+// Developed Files
+
+var renderer = require('./RenderFile.js')
+
 app.post("/postXml", function (req, res) {
     var body = "";
     req.on('data', function (data) {
         body += data;
     });
     req.on('end', function () {
-        console.log("info", body);
+        //console.log("info", body);
         var postData = body;
-        res.send(postData);
+        //res.send(postData);
         xml2js.parseString(postData, function(err, result){
+            //res.send(result);
             console.log("result " + JSON.stringify(result));
+            new renderer().renderString(postData, req, res);
         })
+
+        //new renderer().renderString(postData, req, res);
+
     });
 });
 

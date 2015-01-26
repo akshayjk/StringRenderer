@@ -1,0 +1,60 @@
+<renderFile>
+    <div>
+//ApInstance</div>
+    <div>
+//AppInstance.m</div>
+    <div>
+#import "AppInstance.h"</div>
+    <div Model="META_TABLE">
+#import "{{ORCHESTRATION_NAME}}.h"</div>
+    <div>
+@interface AppInstance ()
+{
+NSDictionary *opDictionary;
+}
+-(void)getInstance;
+
+@end
+
+@implementation AppInstance
+
+- (id)init
+{
+self = [super init];
+if (self) {
+[self getInstance];
+}
+return self;
+}
+
++(id)sharedInstance
+{
+static AppInstance *staticInstance;
+static dispatch_once_t onceToken;
+dispatch_once(&amp;onceToken, ^{
+staticInstance = [[AppInstance alloc] init];
+});
+return staticInstance;
+}
+
+-(void)getInstance
+{
+opDictionary = @{
+    </div>
+    <div Model="META_TABLE">@"{{ORCHESTRATION_NAME}}":[[{{ORCHESTRATION_NAME}} alloc]init],
+    </div>
+    <div>};
+    </div>
+    <div>}
+    </div>
+    <div Model="META_TABLE">
+-(id)get{{ORCHESTRATION_NAME}}Resource
+{
+return [opDictionary objectForKey:@"{{ORCHESTRATION_NAME}}"];
+}
+    </div>
+    <div>
+@end
+    </div>
+
+</renderFile>

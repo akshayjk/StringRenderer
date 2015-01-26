@@ -1,0 +1,21 @@
+get the xml data convert to the object;
+from object convert to mustache
+
+Aim is to produce one of the files in the client SDK from the meta JSON present
+
+
+process is as follows :
+1. Get the XML with limited specific tags
+2. Then convert the xml into the JSON format
+    error handling --> invalid json and improper tags/ unknown tags
+3. Build the mustache script  --> script for mustache rendering -- that has problems for generating the rendering script
+
+Best way is to make our own script for identifying the names in double braces
+
+
+
+For Object if the data model is the object its easy to render the string -- > wrote the function for the same
+
+
+For  the Array
+
