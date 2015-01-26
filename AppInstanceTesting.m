@@ -1,286 +1,72 @@
-
-//ApInstance
-//AppInstance.m
-#import "AppInstance.h"
-#import "DeviceRegistration.h"
-#import "DeviceMapFlagDetails.h"
-#import "DeviceReMapping.h"
-#import "CSRFTokenGeneration.h"
-#import "BreakDownCREATE.h"
-#import "OneTimePassword.h"
-#import "EmailPhoneUpdate.h"
-#import "CustomerMiscellaneous.h"
-#import "FormDefinitions.h"
-#import "FormDefinitionName.h"
-#import "FormsCollection.h"
-#import "GetForm.h"
-#import "FormsPost.h"
-#import "formUpdate.h"
-#import "EligibleCustomer.h"
-#import "GetCustomerWithID.h"
-#import "GetCustomerWithQuery.h"
-#import "EligibleCustomerEmail.h"
-#import "CustomerCreate.h"
-#import "CustomerUpdatePasswordUPDATE.h"
-#import "LogOutCREATE.h"
-#import "ValidateTokenCREATE.h"
-#import "avgresponsetime.h"
-#import "avgmessagesize.h"
-#import "cachehits.h"
-#import "cachemisses.h"
-#import "avgrequestlatency.h"
-#import "avgresponselatency.h"
-#import "nummessages.h"
-#import "numerrors.h"
-#import "Login.h"
-#import "SAMLREAD.h"
-#import "GetMessagesREAD.h"
-#import "CreateMessageCREATE.h"
-#import "GetMessageWithIDREAD.h"
-@interface AppInstance ()
-{
-NSDictionary *opDictionary;
-}
--(void)getInstance;
-
-@end
-
-@implementation AppInstance
-
-- (id)init
-{
-self = [super init];
-if (self) {
-[self getInstance];
-}
-return self;
-}
-
-+(id)sharedInstance
-{
-static AppInstance *staticInstance;
-static dispatch_once_t onceToken;
-dispatch_once(&onceToken, ^{
-staticInstance = [[AppInstance alloc] init];
-});
-return staticInstance;
-}
-
--(void)getInstance
-{
-opDictionary = @{
-    @"DeviceRegistration":[[DeviceRegistration alloc]init],
-    @"DeviceMapFlagDetails":[[DeviceMapFlagDetails alloc]init],
-    @"DeviceReMapping":[[DeviceReMapping alloc]init],
-    @"CSRFTokenGeneration":[[CSRFTokenGeneration alloc]init],
-    @"BreakDownCREATE":[[BreakDownCREATE alloc]init],
-    @"OneTimePassword":[[OneTimePassword alloc]init],
-    @"EmailPhoneUpdate":[[EmailPhoneUpdate alloc]init],
-    @"CustomerMiscellaneous":[[CustomerMiscellaneous alloc]init],
-    @"FormDefinitions":[[FormDefinitions alloc]init],
-    @"FormDefinitionName":[[FormDefinitionName alloc]init],
-    @"FormsCollection":[[FormsCollection alloc]init],
-    @"GetForm":[[GetForm alloc]init],
-    @"FormsPost":[[FormsPost alloc]init],
-    @"formUpdate":[[formUpdate alloc]init],
-    @"EligibleCustomer":[[EligibleCustomer alloc]init],
-    @"GetCustomerWithID":[[GetCustomerWithID alloc]init],
-    @"GetCustomerWithQuery":[[GetCustomerWithQuery alloc]init],
-    @"EligibleCustomerEmail":[[EligibleCustomerEmail alloc]init],
-    @"CustomerCreate":[[CustomerCreate alloc]init],
-    @"CustomerUpdatePasswordUPDATE":[[CustomerUpdatePasswordUPDATE alloc]init],
-    @"LogOutCREATE":[[LogOutCREATE alloc]init],
-    @"ValidateTokenCREATE":[[ValidateTokenCREATE alloc]init],
-    @"avgresponsetime":[[avgresponsetime alloc]init],
-    @"avgmessagesize":[[avgmessagesize alloc]init],
-    @"cachehits":[[cachehits alloc]init],
-    @"cachemisses":[[cachemisses alloc]init],
-    @"avgrequestlatency":[[avgrequestlatency alloc]init],
-    @"avgresponselatency":[[avgresponselatency alloc]init],
-    @"nummessages":[[nummessages alloc]init],
-    @"numerrors":[[numerrors alloc]init],
-    @"Login":[[Login alloc]init],
-    @"SAMLREAD":[[SAMLREAD alloc]init],
-    @"GetMessagesREAD":[[GetMessagesREAD alloc]init],
-    @"CreateMessageCREATE":[[CreateMessageCREATE alloc]init],
-    @"GetMessageWithIDREAD":[[GetMessageWithIDREAD alloc]init],
-    };
-    }
+The first DeviceRegistration
     
--(id)getDeviceRegistrationResource
-{
-return [opDictionary objectForKey:@"DeviceRegistration"];
-}
+    The first DeviceMapFlagDetails
     
--(id)getDeviceMapFlagDetailsResource
-{
-return [opDictionary objectForKey:@"DeviceMapFlagDetails"];
-}
+    The first DeviceReMapping
     
--(id)getDeviceReMappingResource
-{
-return [opDictionary objectForKey:@"DeviceReMapping"];
-}
+    The first CSRFTokenGeneration
     
--(id)getCSRFTokenGenerationResource
-{
-return [opDictionary objectForKey:@"CSRFTokenGeneration"];
-}
+    The first BreakDownCREATE
     
--(id)getBreakDownCREATEResource
-{
-return [opDictionary objectForKey:@"BreakDownCREATE"];
-}
+    The first OneTimePassword
     
--(id)getOneTimePasswordResource
-{
-return [opDictionary objectForKey:@"OneTimePassword"];
-}
+    The first EmailPhoneUpdate
     
--(id)getEmailPhoneUpdateResource
-{
-return [opDictionary objectForKey:@"EmailPhoneUpdate"];
-}
+    The first CustomerMiscellaneous
     
--(id)getCustomerMiscellaneousResource
-{
-return [opDictionary objectForKey:@"CustomerMiscellaneous"];
-}
+    The first FormDefinitions
     
--(id)getFormDefinitionsResource
-{
-return [opDictionary objectForKey:@"FormDefinitions"];
-}
+    The first FormDefinitionName
     
--(id)getFormDefinitionNameResource
-{
-return [opDictionary objectForKey:@"FormDefinitionName"];
-}
+    The first FormsCollection
     
--(id)getFormsCollectionResource
-{
-return [opDictionary objectForKey:@"FormsCollection"];
-}
+    The first GetForm
     
--(id)getGetFormResource
-{
-return [opDictionary objectForKey:@"GetForm"];
-}
+    The first FormsPost
     
--(id)getFormsPostResource
-{
-return [opDictionary objectForKey:@"FormsPost"];
-}
+    The first formUpdate
     
--(id)getformUpdateResource
-{
-return [opDictionary objectForKey:@"formUpdate"];
-}
+    The first EligibleCustomer
     
--(id)getEligibleCustomerResource
-{
-return [opDictionary objectForKey:@"EligibleCustomer"];
-}
+    The first GetCustomerWithID
     
--(id)getGetCustomerWithIDResource
-{
-return [opDictionary objectForKey:@"GetCustomerWithID"];
-}
+    The first GetCustomerWithQuery
     
--(id)getGetCustomerWithQueryResource
-{
-return [opDictionary objectForKey:@"GetCustomerWithQuery"];
-}
+    The first EligibleCustomerEmail
     
--(id)getEligibleCustomerEmailResource
-{
-return [opDictionary objectForKey:@"EligibleCustomerEmail"];
-}
+    The first CustomerCreate
     
--(id)getCustomerCreateResource
-{
-return [opDictionary objectForKey:@"CustomerCreate"];
-}
+    The first CustomerUpdatePasswordUPDATE
     
--(id)getCustomerUpdatePasswordUPDATEResource
-{
-return [opDictionary objectForKey:@"CustomerUpdatePasswordUPDATE"];
-}
+    The first LogOutCREATE
     
--(id)getLogOutCREATEResource
-{
-return [opDictionary objectForKey:@"LogOutCREATE"];
-}
+    The first ValidateTokenCREATE
     
--(id)getValidateTokenCREATEResource
-{
-return [opDictionary objectForKey:@"ValidateTokenCREATE"];
-}
+    The first avgresponsetime
     
--(id)getavgresponsetimeResource
-{
-return [opDictionary objectForKey:@"avgresponsetime"];
-}
+    The first avgmessagesize
     
--(id)getavgmessagesizeResource
-{
-return [opDictionary objectForKey:@"avgmessagesize"];
-}
+    The first cachehits
     
--(id)getcachehitsResource
-{
-return [opDictionary objectForKey:@"cachehits"];
-}
+    The first cachemisses
     
--(id)getcachemissesResource
-{
-return [opDictionary objectForKey:@"cachemisses"];
-}
+    The first avgrequestlatency
     
--(id)getavgrequestlatencyResource
-{
-return [opDictionary objectForKey:@"avgrequestlatency"];
-}
+    The first avgresponselatency
     
--(id)getavgresponselatencyResource
-{
-return [opDictionary objectForKey:@"avgresponselatency"];
-}
+    The first nummessages
     
--(id)getnummessagesResource
-{
-return [opDictionary objectForKey:@"nummessages"];
-}
+    The first numerrors
     
--(id)getnumerrorsResource
-{
-return [opDictionary objectForKey:@"numerrors"];
-}
+    The first Login
     
--(id)getLoginResource
-{
-return [opDictionary objectForKey:@"Login"];
-}
+    The first SAMLREAD
     
--(id)getSAMLREADResource
-{
-return [opDictionary objectForKey:@"SAMLREAD"];
-}
+    The first GetMessagesREAD
     
--(id)getGetMessagesREADResource
-{
-return [opDictionary objectForKey:@"GetMessagesREAD"];
-}
+    The first CreateMessageCREATE
     
--(id)getCreateMessageCREATEResource
-{
-return [opDictionary objectForKey:@"CreateMessageCREATE"];
-}
+    The first GetMessageWithIDREAD
     
--(id)getGetMessageWithIDREADResource
-{
-return [opDictionary objectForKey:@"GetMessageWithIDREAD"];
-}
-    
-@end
+    Second line DeviceRegistration
     

@@ -1,0 +1,19 @@
+<renderFile>
+    <div>
+// AppInstance.h
+// AppInstance
+
+
+#import &lt;Foundation/Foundation.h>
+
+@interface AppInstance : NSObject
+
++(id)sharedInstance;
+    </div>
+    <div Model="META_TABLE">
+-(id){{ORCHESTRATION_NAME}}Resource;
+    </div>
+<div>
+@end
+</div>
+</renderFile>

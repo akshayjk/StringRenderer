@@ -30,8 +30,8 @@ StringRenderer.prototype.renderString = function (Str, req, res) {
             }else{
                 console.log("file has been written")
             }
-        })
-
+        });
+        console.log("sending response " + RenderedStringAnswer)
         res.send(RenderedStringAnswer)
     })
 };
@@ -66,9 +66,9 @@ function renderObject(RenderObj) {
             //within object if there is any other object
             var ObjectKeys = Object.keys(RenderObj);
             for (var j = 0; j < ObjectKeys.length; j++) {
-                console.log("Object keys length " + ObjectKeys.length  + "Keys " +  JSON.stringify(ObjectKeys))
+                console.log("Object keys length " + ObjectKeys.length  + "Keys " +  JSON.stringify(ObjectKeys));
                 if (ObjectKeys[j] != "_" && ObjectKeys[j] != "$") {
-                    console.log("Different from Action and String " + JSON.stringify(RenderObj[ObjectKeys[j]]))
+                    console.log("Different from Action and String " + JSON.stringify(RenderObj[ObjectKeys[j]]));
                     renderedString += renderObject(RenderObj[ObjectKeys[j]]);
                 } else {
                     if (RenderObj["$"] != undefined) {

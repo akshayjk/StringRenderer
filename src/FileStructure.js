@@ -28,5 +28,6 @@ function dirTree(filename) {
 if (module.parent == undefined) {
     // node dirTree.js ~/foo/bar
     var util = require('util');
-    console.log(util.inspect(dirTree(__dirname +'/AppDirectory'), false, null));
+    var finalPath = path.join(__dirname , "../AppDirectory");
+    console.log(util.inspect(dirTree(finalPath), false, null));
 }

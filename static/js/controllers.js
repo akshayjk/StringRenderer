@@ -1,0 +1,1 @@
+var AppCtrl = angular.module('Controller.AppCtrl', ['angular-carousel']);

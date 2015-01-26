@@ -1,0 +1,73 @@
+<!doctype html>
+<html ng-app="demo">
+<head>
+    <meta charset="utf-8">
+    <title>Create Code Files</title>
+
+    <!-- TODO: Include Angular from Bower components -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/src-noconflict/ace.js"></script>
+    <script src="./lib/ui-ace.min.js"></script>
+
+    <link rel="stylesheet" href="./dist/json-formatter.min.css">
+    <link rel="stylesheet" href="./demo.css">
+</head>
+<body ng-controller="MainCtrl">
+<div class="page-header">
+    <h1 style="text-align:center">Create Code Files <small><i>Create code from JSON Model</i></small></h1>
+</div>
+<div class="container">
+    <div id="content">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#red" data-toggle="tab">Rendering Script</a></li>
+            <li><a href="#orange" data-toggle="tab">Rendered Code</a></li>
+            <li><a href="#yellow" data-toggle="tab">File System</a></li>
+            <li><a href="#blue" data-toggle="tab">Data Model</a></li>
+        </ul>
+        <div id="my-tab-content" class="tab-content">
+            <div class="tab-pane result" id="blue">
+                <json-formatter json="complex" open="2" class="json-formatter"></json-formatter>
+
+            </div>
+
+            <div class="tab-pane active" id="red" action="POST">
+                <lable>File Type :</lable><select class="btn btn-default dropdown-toggle btnClass" ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
+                <lable>Theme :</lable><select class="btn btn-default dropdown-toggle btnClass" ng-model="theme" ng-options="t for t in themes" ng-change="themeChanged()"></select>
+                <div ui-ace="aceOptions" id="editor" ></div>
+                <button class="btn btn-primary" ng-click="sendCode()">Send</button>
+
+            </div>
+
+            <div class="tab-pane" id="orange">
+                <lable>File Type :</lable><select class="btn btn-default dropdown-toggle btnClass" ng-model="modeRen" ng-options="m for m in modes" ng-change="modeChangedRendered()"></select>
+                <lable>Theme :</lable><select class="btn btn-default dropdown-toggle btnClass" ng-model="themeRen" ng-options="t for t in themes" ng-change="themeChangedRendered()"></select>
+                <div ui-ace="aceOptionsRendered" ng-model="renderedCode"></div>
+                <button type="button" class="btn btn-primary">Download File</button>
+            </div>
+
+            <div class="tab-pane" id="yellow">
+                <p>this is just test Data</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<script src="./dist/json-formatter.min.js"></script>
+<script src="demo.js"></script>
+<script>
+    function ClickMe(){
+        var a = document.getElementById("editor");
+        console.log("after clicking " + a.innerHTML);
+    }
+</script>
+</body>
+</html>

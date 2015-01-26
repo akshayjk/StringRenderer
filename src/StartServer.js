@@ -14,7 +14,7 @@ var express = require('express'),
 
 // Developed Files
 
-var renderer = require('./RenderFile.js')
+var renderer = require('./RenderFile.js');
 
 app.post("/postXml", function (req, res) {
     var body = "";
@@ -29,7 +29,7 @@ app.post("/postXml", function (req, res) {
             //res.send(result);
             console.log("result " + JSON.stringify(result));
             new renderer().renderString(postData, req, res);
-        })
+        });
 
         //new renderer().renderString(postData, req, res);
 
