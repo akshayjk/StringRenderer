@@ -23,16 +23,23 @@ StringRenderer.prototype.renderString = function (Str, req, res) {
 
     xml2js.parseString(Str, function (err, result) {
         //console.log("result " + JSON.stringify(result));
-        var RenderedStringAnswer = renderObject(result);
-        fs.writeFile("AppInstanceTesting.m", RenderedStringAnswer, function (err) {
-            if (err) {
-                //console.log("err while  writing file")
-            } else {
-                //console.log("file has been written")
-            }
-        });
-        console.log("sending response " + RenderedStringAnswer)
-        res.send(RenderedStringAnswer)
+        if(result==undefined || result==""){
+            console.log("Incorrect xml or blank input");
+            res.send("Incorrect xml or blank input");
+        }else{
+            var RenderedStringAnswer = renderObject(result);
+            fs.writeFile("AppInstanceTesting.m", RenderedStringAnswer, function (err) {
+                if (err) {
+                    //console.log("err while  writing file")
+                } else {
+                    //console.log("file has been written")
+                }
+            });
+            console.log("sending response " + RenderedStringAnswer)
+            res.send(RenderedStringAnswer)
+        }
+
+
     })
 };
 

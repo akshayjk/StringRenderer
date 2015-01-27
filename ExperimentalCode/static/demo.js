@@ -10202,10 +10202,10 @@ app.controller('MainCtrl', function ($scope, SendCode) {
   };
   $scope.textData ="";
   $scope.formData = {};
-  $scope.modes =["xml","javascript", "csharp"];
+  $scope.modes =["XML", "Java", "Csharp", "ObjectiveC", "JavaScript", "AppleScript", "C_CPP", "coffee", "HTML", "JSON", "Python" ];
   $scope.mode = $scope.modes[0];
   $scope.modeRen = $scope.modes[0];
-  $scope.themes =["monokai", "clouds", "github"];
+  $scope.themes =["Clouds", "Github", "Chrome", "Eclipse", "XCode", "TextMate", "Monokai", "Twilight"];
   $scope.theme = $scope.themes[0];
   $scope.themeRen = $scope.themes[0];
   $scope.aceOptions ={
