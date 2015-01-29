@@ -1,0 +1,51 @@
+//behaviour
+Object :
+#OuterMost object will never be an array since there is no possibility that it will repeat
+    1. Take an object --> which will be most probably the array
+    2. The array has either string(if there is no Class/Action Tag) and will be an object
+    if it has Class/Action Tag or any inner Object
+    3. currently we dnt have position --> we assume that child object is always be at the end
+    4. Any object may or may not have the "_" tag
+    5. for an object, if there are no colleague objects or class object
+    then it will be a pain string other wise it would be an object and string will be in "_"
+
+
+
+
+fetch the object
+    always outer object --> there should be single key (can be outerMost or renderFile tag)
+        get the value of outerObject key --> this is where each key would be array (always)
+            loop through the array --> get one object
+                Fetch an OBJECT
+                    if(string)--> means just a string --> print string
+                    else if(Object)--> may have class/string/child objects
+
+function RENDER
+finalString =''
+for arrayElement till Array end
+
+    pass through the Action tag operators to get the Data Model and Conditions
+    if(type-string)
+        finalString += PrintString(arrayElement)
+    else if(type - object)--> will have classes --> model, model operations, conditions
+       finalStringObject =''
+           if(childObjects)
+                finalStringObject += RENDER(ChildObject)
+                if(string is present)
+                    finalStringObject = PrintString(string, DataModel, finalStringObject);
+           else --> no child present
+                finalRenderObject =  PrintString(string)
+
+
+
+
+
+
+PrintString(String, DataModel, StringrToAdd, condition){
+    var StringToReturn=''
+    for each element in dataModel
+        evaluate Condition
+            if holds
+                StringToReturn = regexMatch + StringToAdd
+
+}

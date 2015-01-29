@@ -48,16 +48,18 @@ var TheObject = {"renderFile": {"div": ["\n//ApInstance", "\n//AppInstance.m", "
 function renderObject(RenderObj) {
     var renderedString = '';
     if (typeof(RenderObj) == "string") {
+        console.log('renderObj is str ' + RenderObj)
         renderedString += RenderObj;
-    } else if (typeof(RenderObj) == "number") {
-        renderedString += RenderObj.toString();
     } else if (typeof(RenderObj) == "object") {
+        console.log("RenderObjec " + JSON.stringify(RenderObj))
         if (Array.isArray(RenderObj)) {
             // render Array
+            console.log("Arraaaayyyyy")
             RenderObj.forEach(function (RenderObjElement) {
                 renderedString += renderObject(RenderObjElement);
             })
         } else {
+            console.log("Object " + JSON.stringify(RenderObj))
             //render Object
             /*
              * 1. "_" contains the line to render
@@ -74,33 +76,112 @@ function renderObject(RenderObj) {
             var ObjectKeys = Object.keys(RenderObj);
             var InnerRenderedString='';
             for (var j = 0; j < ObjectKeys.length; j++) {
-                ////console.log("Object keys length " + ObjectKeys.length + "Keys " + JSON.stringify(ObjectKeys));
                 if (ObjectKeys[j] != "_" && ObjectKeys[j] != "$") {
-                    //console.log("Different from Action and String " + JSON.stringify(RenderObj[ObjectKeys[j]]));
-                    renderedString += renderObject(RenderObj[ObjectKeys[j]]);
+
+                    InnerRenderedString += renderObject(RenderObj[ObjectKeys[j]]);
+                    console.log("InnerString " + InnerRenderedString + " and was returned for " + JSON.stringify(ObjectKeys[j]))
                 }
             }
-            ////console.log("here the Object to render " + JSON.stringify(RenderObj));
-            ////console.log("and the rendered String " + renderedString);
-            //console.log("$ " + JSON.stringify(RenderObj["$"]));
+
             if (RenderObj["$"] != undefined) {
                 //Inner tags are present
-                //console.log("Inner Tags detected");
                     var ModelToRender = processInnerTags(RenderObj["$"]);
-                    if (ModelToRender != undefined) {
-                        //console.log("Model ");
-                        renderedString += finalRender(RenderObj["_"], ModelToRender);
+                console.log("returned Obj from the processTags " + JSON.stringify(ModelToRender))
+                    if (ModelToRender.Model != undefined) {
+                        renderedString += RenderElement(RenderObj["_"], ModelToRender.Model, InnerRenderedString, ModelToRender.Condition);
                     } else {
-                        //console.log("Model Address is not Correct");
                         renderedString += RenderObj["_"];
                     }
 
             } else {
-                //console.log("$ is not defined means no action tags")
+                renderedString+=InnerRenderedString;
             }
         }
     }
+    console.log("returning " + renderedString)
     return renderedString;
+}
+
+//Prints the current line
+function PrintLine(StrLine, DataModel, ChildString, Condition){
+//console.log("in PrintLine with Str " + StrLine)
+    if(StrLine==undefined){
+        StrLine='';
+    }
+    if(DataModel!=undefined&&typeof(DataModel)=="object"){
+        var DataModelKeys = Object.keys(DataModel);
+        DataModelKeys.forEach(function(Key){
+            var regCond = new RegExp('{{' + Key + '}}', 'ig');
+            if(Condition!=undefined){
+
+                if(typeof(DataModel[Key])=="string"){
+                    Condition = Condition.replace(regCond, "'"+ DataModel[Key] + "'");
+                }else{
+                    Condition = Condition.replace(regCond, DataModel[Key]);
+                }
+            }
+
+        });
+
+        for(var i=0;i<DataModelKeys.length;i++){
+            var reg = new RegExp('{{' + DataModelKeys[i] + '}}', 'ig');
+            if(Condition!=undefined){
+                if(passCondition(Condition)){
+                    if(ChildString){
+                        StrLine = StrLine.replace(reg, DataModel[DataModelKeys[i]]) + ChildString;
+                    }else{
+                        StrLine = StrLine.replace(reg, DataModel[DataModelKeys[i]]);
+                    }
+
+                }else{
+                    StrLine='';
+                }
+            }else{
+                if(ChildString){
+                    StrLine = StrLine.replace(reg, DataModel[DataModelKeys[i]]) + ChildString;
+                }else{
+                    StrLine = StrLine.replace(reg, DataModel[DataModelKeys[i]]);
+                }
+            }
+        }
+    }else{
+        //DataModel is not Defined
+        //console.log("type of DataModel is " + typeof(DataModel) + DataModel)
+    }
+
+    return StrLine;
+}
+
+//Evaluates the condition
+function passCondition(Condition){
+    var ConditionResult = false;
+    try{
+
+
+        eval('if('+ Condition+ '){ConditionResult = true}');
+    }catch(e){
+        console.log("err " + e)
+        console.log("Incorrect Condition " + Condition );
+        //push into the warning or errors
+    }
+    return ConditionResult;
+}
+
+//Renders depending on the Type of DataModel --> DataModel is an Object or an array
+function RenderElement(StrLine, DataModel, ChildString, Condition){
+    var rStr = '';
+    if (Array.isArray(DataModel)) {
+
+        for(var i=0; i<DataModel.length; i++){
+            rStr +=PrintLine(StrLine, DataModel[i], ChildString, Condition);
+        }
+
+    } else {
+        rStr += PrintLine(StrLine, DataModel, ChildString, Condition);
+
+    }
+    return rStr;
+
 }
 
 function renderString(Str, DataModel) {
@@ -128,34 +209,33 @@ function finalRender(Str, DataModel) {
  Model for the rendering after processing different tags on it
  */
 function processInnerTags(RenderObject) {
-    var Keys = Object.keys(RenderObject);
-    var definedActionTags = define.definedActionTags;
-    if (RenderObject.Model != undefined) {
-        //console.log("Model is defined");
-        //get the Model
-        var givenModel = RenderObject.Model;
-        var RenderModel = eval("DataModel.MetaJSON." + givenModel);
-        ////console.log("RenderModel " + JSON.stringify(RenderModel))
-        if (RenderObject.Action != undefined) {
-            //Action is given then split the Action and process the actions
-            var Actions = RenderObject.Action.split(" ");
-            for (var i = 0; i < Actions.length; i++) {
-                if (definedActionTags.match(Actions[i] + "#") != -1) {
-                    //console.log("Action Tag is available ");
-                    RenderModel = new InnerTagFunctions()[Actions[i]](RenderModel);
-                } else {
-                    //console.log("Unknown Inner tag " + Actions[i]);
-                    Warnings.push("Unknown Inner tag " + Actions[i]);
-                }
 
+    var definedActionTags = define.definedActionTags;
+    var PrInTagRes ={};
+    if(RenderObject.Condition!=undefined){
+        PrInTagRes.Condition = RenderObject.Condition;
+        delete RenderObject.Condition;
+    }
+    if(RenderObject.Model!=undefined){
+        //Model is defined
+        PrInTagRes.Model=eval("DataModel.MetaJSON." + RenderObject.Model);
+        delete RenderObject.Model;
+
+        var Keys = Object.keys(RenderObject);
+
+        for(var i=0;i<Keys.length;i++){
+            if(definedActionTags.match(Keys[i] +"#")!=-1){
+                //Tag is available
+                PrInTagRes.Model = new InnerTagFunctions()[Keys[i]](PrInTagRes.Model);
+            }else{
+                console.log("Tag " + Keys[i] + " is not available");
+                Warnings.push("Tag " + Keys[i] + " is not available");
             }
         }
-
-    } else {
-        //console.log("Model is undefined");
-
     }
-    return RenderModel;
+    //check if the tag is available
+
+    return PrInTagRes;
 }
 
 module.exports = StringRenderer;
